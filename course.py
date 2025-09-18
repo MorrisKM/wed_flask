@@ -37,6 +37,11 @@ class CoursesResource(Resource):
   
 @course_ns.route('/courses/<int:id>')
 class CourseResource(Resource):
+  @course_ns.marshal_with(course_model)
+  def get(self,id):
+    course_to_return = Course.query.get_or_404(id)
+    return course_to_return
+  
   def delete(self, id):
     course_to_delete = Course.query.get_or_404(id)
     course_to_delete.delete()
